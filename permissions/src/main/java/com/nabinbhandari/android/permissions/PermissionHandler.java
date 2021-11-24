@@ -85,4 +85,9 @@ public abstract class PermissionHandler {
         onDenied(context, deniedPermissions);
     }
 
+    public void gotoSettings()
+    {
+
+    }
+
 }

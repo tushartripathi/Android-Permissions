@@ -162,31 +162,9 @@ public class PermissionsActivity extends Activity {
             deny();
             return;
         }
-        Permissions.log("Ask to go to settings.");
-        new AlertDialog.Builder(this).setTitle(options.settingsDialogTitle)
-                .setMessage(options.settingsDialogMessage)
-                .setPositiveButton(options.settingsText, new DialogInterface.OnClickListener() {
-                    @Override
-                    @SuppressWarnings("InlinedAPI")
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                Uri.fromParts("package", getPackageName(), null));
-                        startActivityForResult(intent, RC_SETTINGS);
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        deny();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        deny();
-                    }
-                }).create().show();
+        toSettings();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -228,5 +206,15 @@ public class PermissionsActivity extends Activity {
             permissionHandler.onGranted();
         }
     }
+
+    public void toSettings()
+    {
+        PermissionHandler permissionHandler = PermissionsActivity.permissionHandler;
+        finish();
+        if (permissionHandler != null) {
+            permissionHandler.gotoSettings();
+        }
+    }
+
 
 }
